@@ -9,11 +9,12 @@
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.pop1213.mybatishelper.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.pop1213.mybatishelper.startup.MyProjectActivity" />
+        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.github.pop1213.mybatishelper.navigation.MapperJavaLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="com.github.pop1213.mybatishelper.navigation.MapperXmlLineMarkerProvider"/>
     </extensions>
 </idea-plugin>
