@@ -1,4 +1,4 @@
-# mybatis-helper
+# tiny-mybatis-helper
 
 A lightweight, high-performance IntelliJ IDEA plugin designed to simplify navigating between MyBatis Mapper Java interfaces and their corresponding XML mapping files.
 
