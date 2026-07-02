@@ -4,8 +4,13 @@
     <name>mybatis-helper</name>
     <vendor>pop1213</vendor>
     <description><![CDATA[
-        <p><b>mybatis-helper</b> is a repository that provides a pure template to make it easier to create a new plugin project.</p>
-        <p>The main goal of this template is to speed up the setup phase of plugin development for both new and experienced developers by preconfiguring the project scaffold and CI, linking to the proper documentation pages, and keeping everything organized.</p>
+        <p><b>mybatis-helper</b> is a lightweight and high-performance IntelliJ IDEA plugin for MyBatis development.</p>
+        <p><b>Key Features:</b></p>
+        <ul>
+            <li><b>Java to XML Navigation:</b> Quickly jump from a MyBatis Mapper Java interface method directly to its corresponding SQL statement tag in the XML mapper file.</li>
+            <li><b>XML to Java Navigation:</b> Seamlessly jump back from XML statement tags (<code>&lt;select&gt;</code>, <code>&lt;insert&gt;</code>, <code>&lt;update&gt;</code>, <code>&lt;delete&gt;</code>) to their Java interface declarations.</li>
+            <li><b>High Performance:</b> Built using optimized index-based lookup to ensure zero lag even in large codebases.</li>
+        </ul>
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>

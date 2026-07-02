@@ -1,45 +1,28 @@
 # mybatis-helper
 
-![Build](https://github.com/pop1213/mybatis-helper/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
+A lightweight, high-performance IntelliJ IDEA plugin designed to simplify navigating between MyBatis Mapper Java interfaces and their corresponding XML mapping files.
 
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [group](./gradle.properties), as well as the [id](./src/main/resources/META-INF/plugin.xml), [name](./src/main/resources/META-INF/plugin.xml), and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin [description](./src/main/resources/META-INF/plugin.xml) (see [Tips][docs:plugin-description]) and this README to describe what your plugin does.
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `MARKETPLACE_ID` in the above README badges. You can obtain it once the plugin is published to JetBrains Marketplace.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
+## Features
 
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+* 🚀 **Java Mapper ➔ XML SQL**: Jump from a Mapper Java interface method directly to its corresponding statement tag (`<select>`, `<insert>`, `<update>`, `<delete>`) in the Mapper XML file.
+* ↩️ **XML SQL ➔ Java Mapper**: Jump back from XML statement tags to the Java interface method declarations.
+* ⚡ **High Performance**: Optimized using IntelliJ index-based word search to ensure instant navigation even in large project codebases.
+* 🛠️ **Seamless Integration**: Standard gutter icons integrated directly into the editor.
+
+## Gutter Navigation Icons
+
+* **Interface Method to XML Statement**: Displayed next to Java Mapper interface methods. Click to jump to the XML definition.
+* **XML Statement to Interface Method**: Displayed next to SQL statement tags inside MyBatis XML files. Click to jump to the Java interface method.
 
 ## Installation
 
-- Using the IDE built-in plugin system:
-
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "mybatis-helper"</kbd> >
-  <kbd>Install</kbd>
-
-- Using JetBrains Marketplace:
-
-  Go to [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID) and install it by clicking the <kbd>Install to ...</kbd> button in case your IDE is running.
-
-  You can also download the [latest release](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID/versions) from JetBrains Marketplace and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
-
-- Manually:
-
-  Download the [latest release](https://github.com/pop1213/mybatis-helper/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
-
+### Method 1: Install from Disk
+1. Download the latest release package (ZIP format) from the [releases](https://github.com/pop1213/mybatis-helper/releases).
+2. Open IntelliJ IDEA.
+3. Go to **Settings/Preferences** ➔ **Plugins**.
+4. Click the gear icon (**⚙️**) on the top right and select **Install Plugin from Disk...**.
+5. Select the downloaded ZIP file and click OK.
+6. Restart your IDE.
 
 ---
-Plugin based on the [IntelliJ Platform Plugin Template][template].
-
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template
-[docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
+Plugin based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template).
