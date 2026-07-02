@@ -17,15 +17,12 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Debug Gradle Properties
-        
+
+      - name: Show Environment
         run: |
-          cat gradle.properties
-          
-          echo "JAVA_TOOL_OPTIONS=$JAVA_TOOL_OPTIONS"
-          
-          echo "GRADLE_OPTS=$GRADLE_OPTS"
-      # Free GitHub Actions Environment Disk Space
+          env | sort | grep -Ei 'proxy|http|https|JAVA_TOOL_OPTIONS|GRADLE_OPTS' || true
+         
+            # Free GitHub Actions Environment Disk Space
       - name: Maximize Build Space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
