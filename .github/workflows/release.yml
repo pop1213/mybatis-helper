@@ -2,10 +2,19 @@
 # Running the publishPlugin task requires all the following secrets to be provided: PUBLISH_TOKEN, PRIVATE_KEY, PRIVATE_KEY_PASSWORD, CERTIFICATE_CHAIN.
 # See https://plugins.jetbrains.com/docs/intellij/plugin-signing.html for more information.
 
+# name: Release
+# on:
+#   release:
+#     types: [ prereleased, released ]
 name: Release
+
 on:
+  workflow_dispatch:
+
   release:
-    types: [ prereleased, released ]
+    types:
+      - prereleased
+      - released
 
 jobs:
 
@@ -18,7 +27,11 @@ jobs:
       pull-requests: write
     steps:
 
-      # Free GitHub Actions Environment Disk Space
+      - name: Show Environment
+        run: |
+          env | sort | grep -Ei 'proxy|http|https|JAVA_TOOL_OPTIONS|GRADLE_OPTS' || true
+         
+            # Free GitHub Actions Environment Disk Space
       - name: Maximize Build Space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
