@@ -45,7 +45,15 @@ class MyBatisSqlConsoleFilter(private val project: Project) : Filter {
             pendingSqlTemplate = null
 
             // Truncate at "<==" in case Parameters: and Columns: are flushed on the same line
-            val paramsStr = parametersMatch.groupValues[1].trim().substringBefore("<==").trimEnd()
+            var paramsStr = parametersMatch.groupValues[1].trim().substringBefore("<==").trimEnd()
+            val placeholderCount = sqlTemplate.count { it == '?' }
+            if (placeholderCount > 0) {
+                val pattern = """^(\s*.*?\(\w+\)(?:\s*,\s*.*?\(\w+\)){${placeholderCount - 1}})"""
+                val match = Regex(pattern).find(paramsStr)
+                if (match != null) {
+                    paramsStr = match.groupValues[1].trim()
+                }
+            }
             val fullSql = MyBatisSqlParser.buildSql(sqlTemplate, paramsStr)
 
             val keywordPos = line.indexOf(LINK_MARKER).takeIf { it >= 0 } ?: return null
