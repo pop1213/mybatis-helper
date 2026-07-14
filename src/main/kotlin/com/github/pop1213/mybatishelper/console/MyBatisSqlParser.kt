@@ -35,6 +35,43 @@ object MyBatisSqlParser {
         return sb.toString()
     }
 
+    /**
+     * Replaces `?` placeholders in [template] with parsed values from ShardingSphere's paramsStr.
+     * ShardingSphere params are enclosed in `[...]` and comma-separated, without explicit type suffixes.
+     */
+    fun buildShardingSphereSql(template: String, paramsStr: String): String {
+        var cleanParamsStr = paramsStr.trim()
+        if (cleanParamsStr.startsWith("[")) {
+            cleanParamsStr = cleanParamsStr.substring(1)
+        }
+        if (cleanParamsStr.endsWith("]")) {
+            cleanParamsStr = cleanParamsStr.substring(0, cleanParamsStr.length - 1)
+        }
+        if (cleanParamsStr.isBlank()) return template
+
+        val params = cleanParamsStr.split(",").map { part ->
+            val trimmed = part.trim()
+            when {
+                trimmed.equals("null", ignoreCase = true) -> "NULL"
+                trimmed.matches(Regex("""^-?\d+(\.\d+)?$""")) -> trimmed
+                trimmed.startsWith("'") && trimmed.endsWith("'") -> trimmed
+                else -> "'${trimmed.replace("'", "''")}'"
+            }
+        }
+
+        var paramIndex = 0
+        val sb = StringBuilder(template.length + params.sumOf { it.length })
+
+        for (c in template) {
+            if (c == '?') {
+                sb.append(if (paramIndex < params.size) params[paramIndex++] else "?")
+            } else {
+                sb.append(c)
+            }
+        }
+        return sb.toString()
+    }
+
     // -----------------------------------------------------------------------
     // Private helpers
     // -----------------------------------------------------------------------

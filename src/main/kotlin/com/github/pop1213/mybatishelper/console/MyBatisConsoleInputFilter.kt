@@ -23,9 +23,8 @@ import com.intellij.openapi.util.Pair
 class MyBatisConsoleInputFilter : InputFilter {
 
     companion object {
-        /** Captures the `Parameters:` prefix and everything after it as two groups. */
         private val PARAMETERS_LINE = Regex("""(.*=+>\s*Parameters:)(\s*.*)""")
-
+        private val SHARDING_LINE = Regex("""(.*:::)\s*(\[.*\])""")
         private const val MAGIC_WAND = " 🪄"
     }
 
@@ -33,9 +32,18 @@ class MyBatisConsoleInputFilter : InputFilter {
         text: String,
         contentType: ConsoleViewContentType
     ): List<Pair<String, ConsoleViewContentType>>? {
-        val match = PARAMETERS_LINE.find(text) ?: return null
-        // Insert emoji between "Parameters:" and the rest of the line
-        val modified = "${match.groupValues[1]}$MAGIC_WAND${match.groupValues[2]}"
-        return listOf(Pair.create(modified, contentType))
+        val mybatisMatch = PARAMETERS_LINE.find(text)
+        if (mybatisMatch != null) {
+            val modified = "${mybatisMatch.groupValues[1]}$MAGIC_WAND${mybatisMatch.groupValues[2]}"
+            return listOf(Pair.create(modified, contentType))
+        }
+
+        val shardingMatch = SHARDING_LINE.find(text)
+        if (shardingMatch != null) {
+            val modified = "${shardingMatch.groupValues[1]}$MAGIC_WAND ${shardingMatch.groupValues[2]}"
+            return listOf(Pair.create(modified, contentType))
+        }
+
+        return null
     }
 }
