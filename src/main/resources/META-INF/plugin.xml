@@ -19,7 +19,19 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Mapper navigation (Java ↔ XML) -->
         <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.github.pop1213.mybatishelper.navigation.MapperJavaLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML" implementationClass="com.github.pop1213.mybatishelper.navigation.MapperXmlLineMarkerProvider"/>
+
+        <!-- Console SQL filter: detects MyBatis SQL log pairs and adds a clickable hyperlink -->
+        <consoleFilterProvider implementation="com.github.pop1213.mybatishelper.console.MyBatisSqlConsoleFilterProvider"/>
+
+        <!-- Input filter: inserts 🪄 emoji after "Parameters:" before text is written to console -->
+        <consoleInputFilterProvider implementation="com.github.pop1213.mybatishelper.console.MyBatisConsoleInputFilterProvider"/>
+
+        <!-- Notification group for the SQL helper balloon -->
+        <notificationGroup id="MyBatis SQL Helper"
+                           displayType="BALLOON"
+                           isLogByDefault="true"/>
     </extensions>
 </idea-plugin>

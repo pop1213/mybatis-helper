@@ -1,18 +1,48 @@
 # tiny-mybatis-helper
 
-A lightweight, high-performance IntelliJ IDEA plugin designed to simplify navigating between MyBatis Mapper Java interfaces and their corresponding XML mapping files.
+A lightweight, high-performance IntelliJ IDEA plugin designed to simplify MyBatis development — from navigating between Mapper interfaces and XML files, to reconstructing and executing SQL directly from the Run/Debug console.
 
 ## Features
 
+### 🗺️ Mapper Navigation
 * 🚀 **Java Mapper ➔ XML SQL**: Jump from a Mapper Java interface method directly to its corresponding statement tag (`<select>`, `<insert>`, `<update>`, `<delete>`) in the Mapper XML file.
 * ↩️ **XML SQL ➔ Java Mapper**: Jump back from XML statement tags to the Java interface method declarations.
 * ⚡ **High Performance**: Optimized using IntelliJ index-based word search to ensure instant navigation even in large project codebases.
-* 🛠️ **Seamless Integration**: Standard gutter icons integrated directly into the editor.
+
+### 🪄 Console SQL Helper
+When MyBatis logs SQL to the Run/Debug console, the plugin automatically:
+
+1. **Inserts a `🪄` emoji** right after the `Parameters:` marker for quick visual identification.
+2. **Annotates the `Parameters: 🪄` text** as a clickable blue hyperlink — click to reconstruct the full SQL (with parameters substituted) and open it in a Scratch editor / Query Console. The SQL is also copied to the clipboard.
+3. **Annotates the parameter values** (in green bold) as a second clickable zone — click to reconstruct the SQL and attempt to execute it directly in a Database Query Console.
+
+**Example console output:**
+```
+==>  Preparing: SELECT * FROM user WHERE id = ? AND name = ?
+==>  Parameters: 🪄 1(Integer), tom(String)
+                 ^^^^^^^^^^^^^^^^  ← blue link  → open SQL
+                                   ^^^^^^^^^^^^^  ← green link → execute SQL
+```
+
+**Reconstructed SQL:**
+```sql
+SELECT * FROM user WHERE id = 1 AND name = 'tom'
+```
+
+**Supported parameter types:**
+
+| Type | Output |
+|---|---|
+| `Integer`, `Long`, `Double`, `Float`, `BigDecimal` | bare number |
+| `Boolean` | `true` / `false` |
+| `String`, `Character` | `'value'` (single-quoted) |
+| `Date`, `LocalDate`, `LocalDateTime`, `Timestamp` … | `'value'` |
+| `null` | `NULL` |
 
 ## Gutter Navigation Icons
 
-* **Interface Method to XML Statement**: Displayed next to Java Mapper interface methods. Click to jump to the XML definition.
-* **XML Statement to Interface Method**: Displayed next to SQL statement tags inside MyBatis XML files. Click to jump to the Java interface method.
+* **Interface Method → XML Statement**: Displayed next to Java Mapper interface methods. Click to jump to the XML definition.
+* **XML Statement → Interface Method**: Displayed next to SQL statement tags inside MyBatis XML files. Click to jump to the Java interface method.
 
 ## Installation
 
