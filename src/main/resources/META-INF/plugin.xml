@@ -23,6 +23,9 @@
         <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.github.pop1213.mybatishelper.navigation.MapperJavaLineMarkerProvider"/>
         <codeInsight.lineMarkerProvider language="XML" implementationClass="com.github.pop1213.mybatishelper.navigation.MapperXmlLineMarkerProvider"/>
 
+        <!-- File-based index for fast XML namespace lookup -->
+        <fileBasedIndex implementation="com.github.pop1213.mybatishelper.navigation.MyBatisNamespaceIndex"/>
+
         <!-- Console SQL filter: detects MyBatis SQL log pairs and adds a clickable hyperlink -->
         <consoleFilterProvider implementation="com.github.pop1213.mybatishelper.console.MyBatisSqlConsoleFilterProvider"/>
 

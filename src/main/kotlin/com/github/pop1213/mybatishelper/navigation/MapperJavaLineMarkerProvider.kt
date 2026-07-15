@@ -36,33 +36,30 @@ class MapperJavaLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
         val targets = mutableListOf<XmlTag>()
 
-        // Find XML files containing the interface's short name (highly efficient indexed search)
-        PsiSearchHelper.getInstance(project).processAllFilesWithWord(
-            shortName,
-            GlobalSearchScope.projectScope(project),
-            { file ->
-                if (file is XmlFile) {
-                    val rootTag = file.rootTag
-                    if (rootTag != null && rootTag.name == "mapper") {
-                        val namespace = rootTag.getAttributeValue("namespace")
-                        if (namespace == qualifiedName) {
-                            for (subTag in rootTag.subTags) {
-                                if (subTag.name in statementTags && subTag.getAttributeValue("id") == methodName) {
-                                    targets.add(subTag)
-                                }
-                            }
-                        }
-                    }
-                }
-                true
-            },
-            true
+        val scope = GlobalSearchScope.projectScope(project)
+        val files = com.intellij.util.indexing.FileBasedIndex.getInstance().getContainingFiles(
+            MyBatisNamespaceIndex.INDEX_ID,
+            qualifiedName,
+            scope
         )
 
-        // Fallback for tests or projects: check files by name (e.g. UserMapper.xml)
+        val psiManager = com.intellij.psi.PsiManager.getInstance(project)
+        for (virtualFile in files) {
+            val psiFile = psiManager.findFile(virtualFile) as? XmlFile ?: continue
+            val rootTag = psiFile.rootTag
+            if (rootTag != null && rootTag.name == "mapper") {
+                for (subTag in rootTag.subTags) {
+                    if (subTag.name in statementTags && subTag.getAttributeValue("id") == methodName) {
+                        targets.add(subTag)
+                    }
+                }
+            }
+        }
+
+        // Fallback for tests or unindexed/new files: check files by name (e.g. UserMapper.xml)
         if (targets.isEmpty()) {
-            val files = FilenameIndex.getFilesByName(project, "$shortName.xml", GlobalSearchScope.projectScope(project))
-            for (file in files) {
+            val filesByName = FilenameIndex.getFilesByName(project, "$shortName.xml", scope)
+            for (file in filesByName) {
                 if (file is XmlFile) {
                     val rootTag = file.rootTag
                     if (rootTag != null && rootTag.name == "mapper") {
